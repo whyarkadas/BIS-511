@@ -19,7 +19,7 @@ def Run():
         parking_hour = GetParkingHour()
 
         if parking_hour == 0:
-            print_result(total_receipt, average_parking_hour)
+            PrintResult(total_receipt, average_parking_hour)
             return
 
         charge = DetermineCharges(parking_hour)
@@ -31,7 +31,7 @@ def Run():
         total_receipt = TotalReceipt(charge_list)
         average_parking_hour = CalculateAverageParkingHour(parking_hour_list)
 
-        print_result(total_receipt, average_parking_hour)
+        PrintResult(total_receipt, average_parking_hour)
 
 
 def DetermineCharges(hours_parked):
@@ -75,7 +75,7 @@ def CalculateAverageParkingHour(parking_hour_list):
     return total_parkig_hour / len(parking_hour_list)
 
 
-def print_result(total_receipt, average_parking_hour):
+def PrintResult(total_receipt, average_parking_hour):
     print("####### CUMULATIVE RESULT ######")
     print(f"Total receipt for yesterday is : {total_receipt}")
     print(f"Average parking hour is : {average_parking_hour:.2f}")

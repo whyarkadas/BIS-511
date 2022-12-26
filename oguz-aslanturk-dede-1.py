@@ -8,7 +8,7 @@
 import random
 
 
-def Run():
+def run():
     number_to_guess = random.randint(1, 1000)
     print("I have a number between 1 to 1000.")
     print("Can you guess my number?")
@@ -16,15 +16,17 @@ def Run():
     result = False
     guess_count = 1
 
+    is_first_guess = True
     while not result:
-        result = CheckGuess(number_to_guess)
+        result = check_guess(number_to_guess, is_first_guess)
+        is_first_guess = False
         guess_count += 1
 
-    PrintResult(guess_count)
+    print_result(guess_count)
 
 
-def CheckGuess(number_to_guess):
-    user_guess = GetUserGuess()
+def check_guess(number_to_guess, is_first_guess):
+    user_guess = get_user_guess(is_first_guess)
 
     if number_to_guess == user_guess:
         print("Excellent!! You guessed the number!!!")
@@ -38,7 +40,7 @@ def CheckGuess(number_to_guess):
         return False
 
 
-def PrintResult(guess_count):
+def print_result(guess_count):
     if guess_count == 10:
         print("Ahah! You know the secret!")
     else:
@@ -48,10 +50,13 @@ def PrintResult(guess_count):
             print("Either you know the secret or you got lucky")
 
 
-def GetUserGuess():
+def get_user_guess(is_first_guess):
+    first_guess_text = ""
+
     while True:
         try:
-            user_guess = int(input("Please type your first guess: "))
+            if is_first_guess: first_guess_text = "first "
+            user_guess = int(input(f"Please type your {first_guess_text}guess: "))
         except ValueError:
             print("Please enter a valid integer 1-1000")
             continue
@@ -61,5 +66,4 @@ def GetUserGuess():
             print('The integer must be in the range 1-1000')
 
 
-Run()
-
+run()

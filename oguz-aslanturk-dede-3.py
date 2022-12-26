@@ -36,6 +36,7 @@ def get_working_day():
             shift_day = int(input("Please type shift day: "))
         except ValueError:
             print("Please enter a valid day 0-7")
+            continue
         if 0 <= shift_day <= 7:
             return shift_day
         else:
@@ -47,7 +48,8 @@ def get_shift_start():
         try:
             shift_start = int(input("Please type shift beginning hour: "))
         except ValueError:
-            print("Please enter a valid day 0-7")
+            print("Please enter a valid a valid shift 0-23")
+            continue
         if 0 <= shift_start <= 23:
             return shift_start
         else:
@@ -59,7 +61,8 @@ def get_shift_end(working_hour_begins):
         try:
             shift_end = int(input("Please type shift end hour: "))
         except ValueError:
-            print("Please enter a valid day 0-7")
+            print(f"Please enter a valid shift end hour {working_hour_begins}-23")
+            continue
         if working_hour_begins < shift_end <= 23:
             return shift_end
         else:
@@ -85,13 +88,13 @@ def print_days():
 
 
 def find_available_personnel(excuse_list, day, working_hour_begins, working_hour_ends):
-    available_personnels = []
+    available_personnel = []
 
     for personnel_excuse_list in excuse_list:
         if check_personnel_status(personnel_excuse_list[day], working_hour_begins, working_hour_ends ):
-            available_personnels.append(personnel_excuse_list[0])
+            available_personnel.append(personnel_excuse_list[0])
 
-    return available_personnels
+    return available_personnel
 
 
 def check_personnel_status(personnel_excuse_hours, working_hour_begins, working_hour_ends):
