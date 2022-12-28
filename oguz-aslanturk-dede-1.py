@@ -9,20 +9,65 @@ import random
 
 
 def run():
-    number_to_guess = random.randint(1, 1000)
-    print("I have a number between 1 to 1000.")
-    print("Can you guess my number?")
+    try_again = True
+    exit_app = False
+
+    while try_again:
+        number_to_guess = random.randint(1, 1000)
+
+        if check_first_guess(number_to_guess):
+            try_again = check_reply_again()
+            exit_app = not try_again
+        else:
+            try_again = False
+
+    if exit_app:
+        return
 
     result = False
     guess_count = 1
+    number_to_guess = random.randint(1, 1000)
 
-    is_first_guess = True
     while not result:
-        result = check_guess(number_to_guess, is_first_guess)
-        is_first_guess = False
+        result = check_guess(number_to_guess, False)
         guess_count += 1
 
     print_result(guess_count)
+
+
+def check_first_guess(number_to_guess):
+    print("I have a number between 1 to 1000.")
+    print("Can you guess my number?")
+
+    user_guess = get_user_guess(True)
+
+    if user_guess == number_to_guess:
+        print("Excellent!! You guessed the number!!!")
+        return True
+
+    return False
+
+
+def check_reply_again():
+    reply = get_play_again()
+
+    if reply == 'y' or reply == 'Y':
+        return True
+    else:
+        return False
+
+
+def get_play_again():
+    while True:
+        try:
+            reply = input("Would you like to play again (y or n)?")
+        except ValueError:
+            print("Please enter a valid reply 'y' or 'n'")
+            continue
+        if reply == 'y' or reply == 'Y' or reply == 'n' or reply == 'N':
+            return reply
+        else:
+            print("Please enter a valid reply 'y' or 'n'")
 
 
 def check_guess(number_to_guess, is_first_guess):
@@ -40,7 +85,7 @@ def check_guess(number_to_guess, is_first_guess):
         return False
 
 
-def print_result(guess_count):
+def print_result(guess_count, ):
     if guess_count == 10:
         print("Ahah! You know the secret!")
     else:
